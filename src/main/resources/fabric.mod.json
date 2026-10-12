@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "inspectanim",
+  "version": "1.0.0",
+  "name": "Inspect Animation",
+  "description": "CS2-Style Inspect-Animation fuer Items, inkl. Vanish-Effekt.",
+  "environment": "client",
+  "entrypoints": { "client": ["de.inspectanim.InspectAnimClient"] },
+  "mixins": ["inspectanim.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
