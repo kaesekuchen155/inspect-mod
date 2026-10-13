@@ -1,0 +1,7 @@
+{
+  "required": false,
+  "package": "de.inspectanim.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["HandRenderMixin"],
+  "injectors": { "defaultRequire": 0 }
+}

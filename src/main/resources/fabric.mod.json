@@ -6,7 +6,7 @@
   "description": "CS2-Style Inspect-Animation fuer Items, inkl. Vanish-Effekt.",
   "environment": "client",
   "entrypoints": { "client": ["de.inspectanim.InspectAnimClient"] },
-  "mixins": ["inspectanim.mixins.json"],
+  "mixins": ["inspectanim.mixins.json", "inspectanim-hand.mixins.json"],
   "depends": {
     "fabricloader": ">=0.19.5",
     "minecraft": "~26.3",

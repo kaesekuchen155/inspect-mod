@@ -26,7 +26,7 @@ public class InspectAnimClient implements ClientModInitializer {
             while (INSPECT_KEY.consumeClick()) {
                 if (!mc.player.getMainHandItem().is(ItemTags.SWORDS)) continue; // nur Schwerter
                 if (mc.player.isShiftKeyDown()) InspectState.toggleVanish();
-                else InspectState.startInspect();
+                else InspectState.pressInspect();
             }
         });
     }
