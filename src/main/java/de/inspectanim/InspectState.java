@@ -28,7 +28,7 @@ public final class InspectState {
     private static final float KICK_OMEGA = 1500f;     // Extra-Schubs pro G-Spam
     private static final long SPAM_WINDOW_MS = 1400;   // G innerhalb dieser Zeit nach dem letzten G = Spam (stoppt nicht)
     private static final float SPIN_DIRECTION = -1f;   // Drehrichtung: -1 oder 1 (einfach umdrehen, falls es falsch herum ist)
-    private static final float PLANE_TILT = -50f;      // Neigung der Drehebene (wie das Karambit schraeg im Bild kreist)
+    private static final float PLANE_TILT = 0f;      // Neigung der Drehebene (wie das Karambit schraeg im Bild kreist)
     private static final long STOP_MS = 700;
     private static final long VANISH_MS = 2200;
     private static final long APPEAR_MS = 1400;
