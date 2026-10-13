@@ -2,6 +2,8 @@ package de.inspectanim;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import net.minecraft.client.Minecraft;
 
 public final class InspectState {
@@ -48,6 +50,10 @@ public final class InspectState {
         return Math.min(1f, (System.currentTimeMillis() - startMs) / (float) duration());
     }
 
+    private static void rot(PoseStack ps, Quaternionf q) {
+        ps.mulPose(new Matrix4f().rotation(q));
+    }
+
     private static float smooth(float x) {
         x = Math.max(0f, Math.min(1f, x));
         return x * x * (3f - 2f * x);
@@ -64,7 +70,10 @@ public final class InspectState {
 
     /** Wird auf den PoseStack der Haupthand angewendet. */
     public static void applyTransform(PoseStack ps) {
-        if (mode == Mode.NONE) return;
+        if (mode == Mode.NONE) {
+            if (hidden) ps.scale(0.001f, 0.001f, 0.001f);
+            return;
+        }
         float p = progress();
         float arc = (float) Math.sin(Math.PI * p);
 
@@ -73,19 +82,19 @@ public final class InspectState {
 
         switch (mode) {
             case INSPECT -> {
-                ps.mulPose(Axis.XP.rotationDegrees(-360f * smooth(p)));                 // Flip
-                ps.mulPose(Axis.YP.rotationDegrees(30f * (float) Math.sin(2 * Math.PI * p)));
-                ps.mulPose(Axis.ZP.rotationDegrees(15f * (float) Math.sin(3 * Math.PI * p)));
+                rot(ps, Axis.XP.rotationDegrees(-360f * smooth(p)));                 // Flip
+                rot(ps, Axis.YP.rotationDegrees(30f * (float) Math.sin(2 * Math.PI * p)));
+                rot(ps, Axis.ZP.rotationDegrees(15f * (float) Math.sin(3 * Math.PI * p)));
             }
             case VANISH -> {
-                ps.mulPose(Axis.XP.rotationDegrees(-540f * smooth(p)));
-                ps.mulPose(Axis.YP.rotationDegrees(360f * smooth(p)));
-                float s = 1f - 0.95f * smooth((p - 0.35f) / 0.4f);                       // schrumpft weg
+                rot(ps, Axis.XP.rotationDegrees(-540f * smooth(p)));
+                rot(ps, Axis.YP.rotationDegrees(360f * smooth(p)));
+                float s = Math.max(0.001f, 1f - smooth((p - 0.35f) / 0.5f));            // schrumpft weg
                 ps.scale(s, s, s);
             }
             case APPEAR -> {
-                ps.mulPose(Axis.YP.rotationDegrees(-360f * (1f - smooth(p))));
-                float s = 0.05f + 0.95f * smooth((p - 0.2f) / 0.6f);                     // waechst rein
+                rot(ps, Axis.YP.rotationDegrees(-360f * (1f - smooth(p))));
+                float s = Math.max(0.001f, smooth((p - 0.1f) / 0.7f));                  // waechst rein
                 ps.scale(s, s, s);
             }
             default -> {}
