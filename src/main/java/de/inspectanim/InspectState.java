@@ -27,6 +27,7 @@ public final class InspectState {
     private static final float FLOURISH_EVERY = 1.7f;  // alle X Sekunden ein Aufdreh-Moment
     private static final float KICK_OMEGA = 1500f;     // Extra-Schubs pro G-Spam
     private static final long SPAM_WINDOW_MS = 1400;   // G innerhalb dieser Zeit nach dem letzten G = Spam (stoppt nicht)
+    private static final float SPIN_DIRECTION = -1f;   // Drehrichtung: -1 oder 1 (einfach umdrehen, falls es falsch herum ist)
     private static final float PLANE_TILT = -50f;      // Neigung der Drehebene (wie das Karambit schraeg im Bild kreist)
     private static final long STOP_MS = 700;
     private static final long VANISH_MS = 2200;
@@ -174,7 +175,7 @@ public final class InspectState {
         ps.translate(LIFT_X * lift, LIFT_Y * lift + bob, LIFT_Z * lift);
         ps.translate(PX, PY, PZ);
         rot(ps, Axis.YP.rotationDegrees(PLANE_TILT * lift));   // feste, schraege Drehebene
-        rot(ps, Axis.ZP.rotationDegrees(angle));               // Spin in EINE Richtung (wie das Karambit)
+        rot(ps, Axis.ZP.rotationDegrees(SPIN_DIRECTION * angle)); // Spin in EINE Richtung (wie das Karambit)
         ps.scale(scale, scale, scale);
         ps.translate(-PX, -PY, -PZ);
     }
