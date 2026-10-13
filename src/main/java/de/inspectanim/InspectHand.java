@@ -15,11 +15,12 @@ public final class InspectHand {
     private InspectHand() {}
 
     private static Method method;
-    private static boolean searched, failed;
+    private static boolean searched, failed, announced;
     private static long lastDrawNs;
 
     public static void render(Object renderer, PoseStack ps, Object collector, int light) {
         if (failed || !InspectState.wantsArm()) return;
+        if (!announced) { announced = true; System.out.println("[inspectanim] Hand-Mixin laeuft."); }
         long now = System.nanoTime();
         if (now - lastDrawNs < 2_000_000L) return;   // nur einmal pro Frame (Haupthand), nicht nochmal fuer die Nebenhand
         Minecraft mc = Minecraft.getInstance();
@@ -35,8 +36,14 @@ public final class InspectHand {
                 if (method == null) {
                     failed = true;
                     System.err.println("[inspectanim] Arm-Methode nicht gefunden - Hand wird nicht gezeichnet.");
+                    for (Method m : renderer.getClass().getDeclaredMethods()) {
+                        String n = m.getName().toLowerCase();
+                        if (n.contains("arm") || n.contains("hand"))
+                            System.err.println("[inspectanim]   Kandidat: " + m);
+                    }
                     return;
                 }
+                System.out.println("[inspectanim] Arm-Methode gefunden: " + method);
             }
             HumanoidArm arm = mc.player.getMainArm();
             Class<?>[] types = method.getParameterTypes();
