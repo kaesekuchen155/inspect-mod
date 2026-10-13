@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "inspectanim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Inspect Animation",
   "description": "CS2-Style Inspect-Animation fuer Items, inkl. Vanish-Effekt.",
   "environment": "client",
